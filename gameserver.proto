@@ -1,0 +1,99 @@
+syntax = "proto3";
+
+package gameserver;
+
+import "google/api/annotations.proto";
+
+// Interface exported by the server.
+service GameServerMaster {
+  rpc GetServerState(GetServerRequest) returns (ServerState) {
+    option (google.api.http) = {
+      get: "/v1/servers/{id}"
+    };
+  }
+  
+  rpc GetServerList(GetServerListRequest) returns (ServerList) {
+    option (google.api.http) = {
+      get: "/v1/servers"
+    };
+  }
+
+  rpc RegisterServer(ServerRegisterRequest) returns (ServerRegisterResponse) {}
+
+  rpc SendHeartbeat(ServerStateRequest) returns (ServerState) {}
+
+  rpc EndGame(EndGameRequest) returns (EndGameResponse) {}
+}
+
+// A Player representation in the GameServerState.
+message Player {
+  // The name of the player.
+  string name = 1;
+  
+  // The score of the player.
+  int32 score = 2;
+  
+  // The team of the player.
+  int32 team = 3;
+}
+
+// The state of the server sent as a Heartbeat
+message ServerState {
+  // The ID of the server
+  string id = 1;
+
+  // The IP and port this server is running on.
+  string address = 2;
+
+  // The elapsed time in the game in seconds.
+  int32 elapsed_time = 3;
+
+  // The timestamp of the last heartbeat.
+  int32 updated_at = 4;
+  
+  // The list of players on this server.
+  repeated Player players = 5;
+}
+
+// The list of servers
+message ServerList {
+  // The list of server states
+  repeated ServerState servers = 1;
+}
+
+// GetServer retrieves the state of a single server
+message GetServerRequest {
+  // The ID of the server
+  string id = 1;
+}
+
+// GetServer retrieves the state of a single server
+message GetServerListRequest {
+  // Which region the servers are located in
+  string region = 1;
+}
+
+message ServerStateRequest {
+  // The state as sent from the game server
+  ServerState state = 1;
+}
+
+// Sent from Gameserver to register themselves
+message ServerRegisterRequest {
+  // The IP address and port combination of the server
+  string address = 1;
+}
+
+// The Gameserver register reponse
+message ServerRegisterResponse {
+  // The associated id of the server
+  string id = 1;
+}
+
+message EndGameRequest {
+  // The state as sent from the game server
+  ServerState state = 1; 
+}
+
+message EndGameResponse { 
+}
