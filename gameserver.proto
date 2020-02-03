@@ -23,6 +23,8 @@ service GameServerMaster {
   rpc SendHeartbeat(ServerStateRequest) returns (ServerState) {}
 
   rpc EndGame(EndGameRequest) returns (EndGameResponse) {}
+
+  rpc AuthorizePlayer(AuthorizePlayerRequest) returns (AuthorizePlayerResponse) {}
 }
 
 // A Player representation in the GameServerState.
@@ -96,4 +98,13 @@ message EndGameRequest {
 }
 
 message EndGameResponse { 
+}
+
+message AuthorizePlayerRequest {
+  string token = 1;
+}
+
+message AuthorizePlayerResponse {
+  bool    authorized = 1;
+  string  id = 2;
 }
