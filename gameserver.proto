@@ -102,6 +102,7 @@ message EndGameResponse {
 
 message AuthorizePlayerRequest {
   string token = 1;
+  string id = 2;
 }
 
 message AuthorizePlayerResponse {
