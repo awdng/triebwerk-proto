@@ -55,6 +55,9 @@ message ServerState {
   
   // The list of players on this server.
   repeated Player players = 5;
+
+  // The region the server is running in.
+  string region = 6;
 }
 
 // The list of servers
