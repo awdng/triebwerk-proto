@@ -108,4 +108,5 @@ message AuthorizePlayerRequest {
 message AuthorizePlayerResponse {
   bool    authorized = 1;
   string  id = 2;
+  string  global_id = 3;
 }
